@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +20,11 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    //key
+    companion object {
+        const val KEY = "com.arghya.learn.MainActivity.KEY"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,21 +35,26 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val btnOrdernow = findViewById<Button>(R.id.btnOrdernow)
+        val order1 = findViewById<EditText>(R.id.order1)
+        val order2 = findViewById<EditText>(R.id.order2)
+        val order3 = findViewById<EditText>(R.id.order3)
 
-        val webView = findViewById<WebView>(R.id.webView)
-        webViewSetup(webView)
 
-    }
 
-    private fun webViewSetup(webView: WebView) {
+        btnOrdernow.setOnClickListener {
+            val ordersList =
+                "Order 1 = " + order1.text.toString() +
+                        "\n Order 2 = " + order2.text.toString() +
+                        "\n Order 3 = " + order3.text.toString()
 
-        webView.webViewClient = WebViewClient()
 
-        webView.apply {
-            settings.javaScriptEnabled = true
-            settings.safeBrowsingEnabled = true
-            loadUrl("https://bluelearn.com")
+            intent = Intent(this, Order::class.java)
+            intent.putExtra(KEY, ordersList)
+            startActivity(intent)
         }
+
+
     }
 
 
